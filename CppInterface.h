@@ -10,8 +10,11 @@ class CppInterface : public QObject
 public:
     explicit CppInterface(QObject *parent = nullptr);
 
-public slots:
-    void runOptimization(int dimensions, double lowerBound, double upperBound, int gridSizeFactorP, int gridSizeFactorQ, int evals, const QString &funcName, bool isFunc, bool isVect, bool withCache, bool withLog, bool withOpt);
+    Q_INVOKABLE void runOptimization(int dimensions, double lowerBound, double upperBound, int gridSizeFactorP, int gridSizeFactorQ, int evals, const QString &funcName, bool isFunc, bool isVect, bool withCache, bool withLog, bool withOpt);
+
+signals:
+    void optimizationDone(const QByteArray &response);
+    void optimizationError(const QString &errorString);
 };
 
 #endif // CPPINTERFACE_H

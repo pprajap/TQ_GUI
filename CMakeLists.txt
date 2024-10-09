@@ -5,7 +5,7 @@ project(TQ_GUI VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 6.2 REQUIRED COMPONENTS Quick)
+find_package(Qt6 6.2 REQUIRED COMPONENTS Quick Network)
 
 
 qt_add_executable(appTQ_GUI
@@ -33,7 +33,7 @@ set_target_properties(appTQ_GUI PROPERTIES
 )
 
 target_link_libraries(appTQ_GUI
-    PRIVATE Qt6::Quick
+    PRIVATE Qt6::Quick Qt6::Network
 )
 
 include(GNUInstallDirs)
