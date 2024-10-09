@@ -20,5 +20,4 @@ void CppInterface::runOptimization(int dimensions, double lowerBound, double upp
     qDebug() << "with_cache:" << withCache;
     qDebug() << "with_log:" << withLog;
     qDebug() << "with_opt:" << withOpt;
-
 }
