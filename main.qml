@@ -1,3 +1,51 @@
+/*
+ * 
+ * This QML file defines the user interface for a function optimization input application.
+ * It uses QtQuick and QtQuick.Controls modules to create a GUI with various input controls
+ * and displays for optimization parameters and results.
+ * 
+ * Components:
+ * 
+ * - ApplicationWindow: The main window of the application.
+ * - Row: A horizontal layout to organize the input and output sections.
+ * - Column: Vertical layouts within the Row to group related controls.
+ * 
+ * Input Controls:
+ * 
+ * - Dimensions (d): A Slider to select the number of dimensions.
+ * - Grid Lower Bound (a): A Slider to set the lower bound of the grid.
+ * - Grid Upper Bound (b): A Slider to set the upper bound of the grid.
+ * - Grid Size Factor (p): A Slider to set the grid size factor p.
+ * - Grid Size Factor (q): A Slider to set the grid size factor q.
+ * - Number of Evals: A SpinBox to set the number of evaluations.
+ * - Display name for function: A ComboBox to select the function to optimize.
+ * - Flags and Options: CheckBoxes to set various flags (is_func, is_vect, with_cache, with_log, with_opt).
+ * - Run Optimization: A Button to trigger the optimization process.
+ * 
+ * Output Displays:
+ * 
+ * - Solver Output: A section to display the results of the optimization.
+ * - Convergence Status: A TextArea to show the convergence status.
+ * - Solution: A TextArea to display the solution found by the optimizer.
+ * - Minima Value: A TextArea to show the minima value of the function.
+ * - Download Solution: A Button to download the solution.
+ * 
+ * Functions:
+ * 
+ * - getFunctionInfo: A JavaScript function to return information about the selected function.
+ * 
+ * Connections:
+ * 
+ * - cppInterface: Connections to handle signals from the C++ backend for optimization results and errors.
+ * 
+ * Usage:
+ * 
+ * - Adjust the sliders and input fields to set the optimization parameters.
+ * - Select the function to optimize from the ComboBox.
+ * - Click the "Run Optimization" button to start the optimization process.
+ * - View the results in the output section.
+ * - Click the "Download Solution" button to save the solution.
+ */
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 
