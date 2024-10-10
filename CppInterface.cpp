@@ -1,7 +1,6 @@
 // CppInterface.cpp
 #include "CppInterface.h"
 #include <QDebug>
-#include <qqmlengine.h>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QNetworkRequest>

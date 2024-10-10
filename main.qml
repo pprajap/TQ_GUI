@@ -220,32 +220,59 @@ ApplicationWindow {
             spacing: 10
 
             // Solver Output
-            Label { text: "Solver Output:" }
-
-            // Convergence Status
-            Label { text: "Convergence Status:" }
+            Label { text: "Solver Output: " }
             TextArea {
-                id: convergenceStatus
+                id: solverStatus
                 readOnly: true
                 width: 200
                 height: 50
                 wrapMode: TextEdit.Wrap
             }
 
-            // Solution
-            Label { text: "Solution:" }
+            // Function Name
+            Label { text: "Function Name: " }
             TextArea {
-                id: solutionOutput
+                id: functionNameOutput
                 readOnly: true
                 width: 200
                 height: 50
                 wrapMode: TextEdit.Wrap
             }
 
-            // Minima Value
-            Label { text: "Minima Value:" }
+            // Evals
+            Label { text: "Evals: " }
             TextArea {
-                id: minimaValue
+                id: evalsOutput
+                readOnly: true
+                width: 200
+                height: 50
+                wrapMode: TextEdit.Wrap
+            }
+
+            // t_all or t_cur
+            Label { text: "t_all or t_cur: " }
+            TextArea {
+                id: tOutput
+                readOnly: true
+                width: 200
+                height: 50
+                wrapMode: TextEdit.Wrap
+            }
+
+            // e_x
+            Label { text: "e_x: " }
+            TextArea {
+                id: exOutput
+                readOnly: true
+                width: 300
+                height: 50
+                wrapMode: TextEdit.Wrap
+            }
+
+            // e_y
+            Label { text: "e_y: " }
+            TextArea {
+                id: eyOutput
                 readOnly: true
                 width: 200
                 height: 50
@@ -254,7 +281,7 @@ ApplicationWindow {
 
             // Download Button
             Button {
-                text: "Download Solution"
+                text: "Download Solution "
                 onClicked: {
                     cppInterface.downloadSolution()
                 }
@@ -262,13 +289,29 @@ ApplicationWindow {
         }
         Connections {
             target: cppInterface
-            function onOptimizationDone(convergenceStatusMessage, solution, minima) {
-                convergenceStatus.text = "Convergence Status: " + convergenceStatusMessage
-                solutionOutput.text = "Solution: " + solution
-                minimaValue.text = "Minima Value: " + minima
+            function onOptimizationDone(response) {
+                var result = JSON.parse(response);
+                solverStatus.text = "SUCCESS"
+                
+                // Extract the values from the minimum_value string
+                var values = result.minimum_value.split("|").map(function(item) {
+                    return item.trim();
+                });
+
+                functionNameOutput.text = values[0]; // "functionName-Dimention eg. Simple-15d"
+                evalsOutput.text = values[1].split("=")[1]; // "evals eg. 1.00e+05"
+                tOutput.text = values[2].split("=")[1]; // "t_all or t_cur eg. 1.55e+00"
+                var e_XY = values[3]; // "eg. e_x=1.24e-02 e_y=1.40e-05"
+
+                // Extract the values from the e_x e_y string
+                var e_xyValues = e_XY.split(" ").map(function(item) {
+                    return item.trim();
+                });                
+                exOutput.text = e_xyValues[0].split("=")[1]; // "e_x eg. 1.52e-02"
+                eyOutput.text = e_xyValues[1].split("=")[1]; // "e_y eg. 2.17e-05"
             }
             function onOptimizationError(errorMessage) {
-                convergenceStatus.text = "Error: " + errorMessage
+                solverStatus.text = "Error: " + errorMessage
             }
         }
     }
