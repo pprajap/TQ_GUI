@@ -3,8 +3,8 @@ import QtQuick.Controls 2.15
 
 ApplicationWindow {
     visible: true
-    width: 800
-    height: 800
+    width: 900
+    height: 900
     title: "Function Optimization Input"
 
     Row {
@@ -102,8 +102,40 @@ ApplicationWindow {
             Label { text: "Display name for function:" }
             ComboBox {
                 id: dispFuncName
-                model: ["Simple", "Tensor", "Alpine"]
-                currentIndex: 1 // Default to "Tensor"
+                model: ["Simple", "Tensor", "Alpine", "Rosenbrock", "Rastrigin", "Sphere", "Styblinski-Tang"]
+                currentIndex: 0 // Default to "Simple"
+                function onCurrentIndexChanged() {
+                    functionInfo.text = "Function Info: " + parent.getFunctionInfo(dispFuncName.currentText)
+                }
+            }
+
+            function getFunctionInfo(functionName) {
+                switch (functionName) {
+                    case "Alpine":
+                        return "f(x) = sum(abs(x * sin(x) + 0.1 * x)), x in [-10, 10]";
+                    case "Simple":
+                        return "f(x) = sin(0.1 * x[0])**2 + 0.1 * sum(x[1:]**2), x in [-1, 1]";
+                    case "Tensor":
+                        return "f(i) = (i[0] - 2)**2 + (i[1] - 3)**2 + sum(i[2:]**4), i in [0, 1, 2, 3]";
+                    case "Rosenbrock":
+                        return "f(x) = sum(100 * (x[i+1] - x[i]**2)**2 + (1 - x[i])**2), x in [-2.048, 2.048]";
+                    case "Rastrigin":
+                        return "f(x) = 10 * d + sum(x[i]**2 - 10 * cos(2 * pi * x[i])), x in [-5.12, 5.12]";
+                    case "Sphere":
+                        return "f(x) = sum(x**2), x in [-5.12, 5.12]";
+                    case "Styblinski-Tang":
+                        return "f(x) = 0.5 * sum(x**4 - 16 * x**2 + 5 * x), x in [-5, 5]";
+                    default:
+                        return "No information available.";
+                }
+            }
+
+            Label {
+                id: functionInfo
+                text: "Function Info: " + parent.getFunctionInfo(dispFuncName.currentText)
+                wrapMode: TextEdit.Wrap
+                width: 300
+                height: 100
             }
 
             // Flags and Options
